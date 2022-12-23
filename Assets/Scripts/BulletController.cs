@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private float _speed;
+    [SerializeField] private float _damage = 1f;
+    [SerializeField] private float _lifeDuration = 2f;
+
+
     void Start()
     {
-        
+        GetComponent<Rigidbody>().velocity = transform.up * _speed;
+        //pour gérer le temps de vie de la bullet 
+        Destroy(gameObjet, _lifeDuration);
     }
 
-    // Update is called once per frame
-    void Update()
+    
+    private void OneCollisionEnter(Collision collision)
     {
-        
+        if (collision.gameObjet.GetComponentInParent<BaseController>() != null)
+        {
+
+        }
+            collision.gameObject.GetComponent<BaseController>().ApplyDamage(_damage);
     }
+    Destroy(gameObject);
 }
+
