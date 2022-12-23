@@ -6,10 +6,33 @@ public class BaseController : MonoBehaviour
 {
     [SerializeField] protected GameObject BulletPrefab;
     [SerializeField] protected GameObject BulletSpawnPosition;
-    protected void Fire()
+    [SerializeField] protected GameObject _head;
+    [SerializeField] protected int _LifePoint = 1;
+    [SerializeField] protected int DelayValue = 2;
+   
+
+
+
+    protected bool Fire()
     {
-        Instantiate<GameObject>(BulletPrefab, BulletSpawnPosition.transform.position, BulletSpawnPosition.transform.rotation);
+        if {
+
+        }
     }
+   
+    
+    private void RotateHeadTo()
+       {
+            Instantiate<GameObject>(BulletPrefab, BulletSpawnPosition.transform.position, BulletSpawnPosition.transform.rotation);
+           //yield return obligatoire : durée fixe de 2s
+            yield return new WaitForSeconds(DelayValue);
+
+        }
+    IEnumerator FireWithDelay()
+    {
+
+    }
+
 
 
     private void Update()
@@ -20,5 +43,17 @@ public class BaseController : MonoBehaviour
             Debug.DrawRay(BulletSpawnPosition.transform.position, BulletSpawnPosition.transform.up * 20f);
             Fire();
         }
+    }
+    private void ApplyDamage(int damage)
+    {
+        _LifePoint = _LifePoint - damage;
+        if(_LifePoint <= 0)
+        {
+            Destruction(gameObject);
+        }
+    }
+    private void Destruction()
+    {
+        Destruction(gameObject);
     }
 }
