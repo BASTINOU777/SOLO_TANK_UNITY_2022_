@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,26 +6,21 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     [SerializeField] private float _speed;
-    [SerializeField] private float _damage = 1f;
+    [SerializeField] private int _damage = 1;
     [SerializeField] private float _lifeDuration = 2f;
-
-
     void Start()
     {
         GetComponent<Rigidbody>().velocity = transform.up * _speed;
-        //pour gérer le temps de vie de la bullet 
-        Destroy(gameObjet, _lifeDuration);
+        Destroy(gameObject, _lifeDuration);
     }
 
-    
-    private void OneCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObjet.GetComponentInParent<BaseController>() != null)
+        if (collision.gameObject.GetComponentInParent<BaseController>() != null)
         {
-
+            collision.gameObject.GetComponentInParent<BaseController>().ApplyDamage(_damage);
         }
-            collision.gameObject.GetComponent<BaseController>().ApplyDamage(_damage);
+        Destroy(gameObject);
     }
-    Destroy(gameObject);
 }
 

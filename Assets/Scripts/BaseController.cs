@@ -4,56 +4,54 @@ using UnityEngine;
 
 public class BaseController : MonoBehaviour
 {
+    [SerializeField] protected int LifePoint = 1;
     [SerializeField] protected GameObject BulletPrefab;
     [SerializeField] protected GameObject BulletSpawnPosition;
+    [SerializeField] protected float DelayValue = 2f;
     [SerializeField] protected GameObject _head;
-    [SerializeField] protected int _LifePoint = 1;
-    [SerializeField] protected int DelayValue = 2;
-   
+    private bool _isArleadyFiring = false;
 
 
 
-    protected bool Fire()
+    protected void Fire()
     {
-        if {
+        if (!_isArleadyFiring)
+        {
+            StartCoroutine(FireWithDelay());
+            _isArleadyFiring = true;
 
         }
     }
-   
-    
-    private void RotateHeadTo()
-       {
-            Instantiate<GameObject>(BulletPrefab, BulletSpawnPosition.transform.position, BulletSpawnPosition.transform.rotation);
-           //yield return obligatoire : durée fixe de 2s
-            yield return new WaitForSeconds(DelayValue);
 
-        }
+    protected void RotateHeadTo(Vector3 targetPosition)
+    {
+        _head.transform.LookAt(targetPosition);
+    }
+
+    // coroutine = nouveau thread
+    // Appel de coroutine : StartCoroutine(<NomDeLIEnumerator>)
     IEnumerator FireWithDelay()
     {
+        Instantiate<GameObject>(BulletPrefab, BulletSpawnPosition.transform.position, BulletSpawnPosition.transform.rotation);
+        // yield return OBLIGATOIRE
+        //Dans  notre cas durée fixe : WaitForSeconds(<DelayD'attente>)
+        yield return new WaitForSeconds(DelayValue);
 
+        _isArleadyFiring = false;
     }
 
-
-
-    private void Update()
+    public void ApplyDamage(int damage)
     {
-        RaycastHit hit;
-        if(Physics.Raycast(BulletSpawnPosition.transform.position,BulletSpawnPosition.transform.up,out hit))
+
+        LifePoint -= damage;
+        if (LifePoint <= 0)
         {
-            Debug.DrawRay(BulletSpawnPosition.transform.position, BulletSpawnPosition.transform.up * 20f);
-            Fire();
+            Destruction();
         }
     }
-    private void ApplyDamage(int damage)
+    //function virtual pour la descruction du tank
+    protected virtual void Destruction()
     {
-        _LifePoint = _LifePoint - damage;
-        if(_LifePoint <= 0)
-        {
-            Destruction(gameObject);
-        }
-    }
-    private void Destruction()
-    {
-        Destruction(gameObject);
+        Destroy(gameObject);
     }
 }

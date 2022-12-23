@@ -10,6 +10,9 @@ public class TankController : BaseController
     [SerializeField] private float _backwardSpeed = 0.2f;
 
     [SerializeField] private float _angleSpeed = 20f;
+    [SerializeField] GameObject _cameraLocator;
+
+
 
 
     void Update()
@@ -57,6 +60,12 @@ public class TankController : BaseController
             RotateHeadTo(new Vector3(hit.point.x, _head.transform.position.y, hit.point.z));
         }
 
+    }
+    //function pour détacher la camera du tank à sa destruction 
+    protected override void Destruction()
+    {
+        _cameraLocator.transform.SetParent(null);
+        base.Destruction();
     }
 }
 
