@@ -1,72 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class TankController : BaseController
+public class TankController : ActorController
 {
-    [SerializeField] private float _forwardSpeed = 0.2f;
-    [SerializeField] private float _backwardSpeed = 0.2f;
-
-    [SerializeField] private float _angleSpeed = 20f;
-    [SerializeField] GameObject _cameraLocator;
-
-
-
-
+    [SerializeField] private float speed = 0.2f;
+    // Update is called once per frame
     void Update()
     {
         Move();
-        AimToMouse();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Fire();
-        }
     }
 
     private void Move()
     {
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Z))
         {
-            transform.Translate(0f, 0f, _forwardSpeed * Time.deltaTime);
-
-        }
-        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(0f, 0f, -_backwardSpeed * Time.deltaTime);
-
-        }
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(0f, _angleSpeed * Time.deltaTime, 0f);
-
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.Q))
-        {
-            transform.Rotate(0f, -_angleSpeed * Time.deltaTime, 0f);
+            transform.Translate(0f, 0f, speed * Time.deltaTime);
 
         }
 
-    }
-
-    private void AimToMouse()
-    {
-        Ray rayToMouse = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(rayToMouse.origin, rayToMouse.direction * 20f, Color.red);
-        RaycastHit hit;
-        if (Physics.Raycast(rayToMouse, out hit))
-        {
-            RotateHeadTo(new Vector3(hit.point.x, _head.transform.position.y, hit.point.z));
-        }
-
-    }
-    //function pour détacher la camera du tank à sa destruction 
-    protected override void Destruction()
-    {
-        _cameraLocator.transform.SetParent(null);
-        base.Destruction();
     }
 }
-
-
