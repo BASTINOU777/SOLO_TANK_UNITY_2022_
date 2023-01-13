@@ -9,6 +9,7 @@ public class TankController : ActorController
 
     [SerializeField] private float _angleSpeed = 20f;
     [SerializeField] private GameObject _cameraLocator;
+    
 
     void Update()
     {
@@ -61,5 +62,6 @@ public class TankController : ActorController
         _cameraLocator.transform.SetParent(null);
         base.Destruction();
     }
+   
 
 }

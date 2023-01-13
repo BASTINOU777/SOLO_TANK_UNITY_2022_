@@ -7,6 +7,7 @@ public class BulletController : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private int _damage = 1;
     [SerializeField] private float _lifeDuration = 2f;
+    //[SerializeField] private AudioClip _soundAieTurret;
     void Start()
     {
         GetComponent<Rigidbody>().velocity = transform.up*_speed;
@@ -19,6 +20,13 @@ public class BulletController : MonoBehaviour
         {
             collision.gameObject.GetComponentInParent<ActorController>().ApplyDamage(_damage);
         }
-        Destroy(gameObject);
+        
+            Destroy(gameObject);
+        
+        
     }
+    
+   
 }
+     
+

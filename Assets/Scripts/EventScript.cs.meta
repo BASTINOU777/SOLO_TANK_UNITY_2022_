@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 4699f5a78c7d74c48a3efd85174a6882
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _soundAieTurret: {fileID: 8300000, guid: b8acef78cbfa1ec499347a0bc7ebb4f9, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class ActorController : MonoBehaviour
 {
-    [SerializeField] protected int LifePoint = 1;
+    //delegate en void ( retourne rien) 
+    public delegate void AieEventDelegate();
+    //event déclarer en static 
+    public static event AieEventDelegate AieEvent;
+
+    [SerializeField] protected int LifePoint = 4;
     [SerializeField] protected GameObject BulletPrefab;
     [SerializeField] protected GameObject BulletSpawnPosition;
     [SerializeField] protected float DelayValue = 2f;
     [SerializeField] protected GameObject _head;
+    
     private bool _isArleadyFiring = false;
+
     // Start is called before the first frame update
     protected void Fire()
     {
@@ -43,6 +50,10 @@ public class ActorController : MonoBehaviour
     {
 
         LifePoint -=  damage;
+        if(damage != 0)
+        {
+            AieEvent?.Invoke();
+        }
         if (LifePoint <= 0)
         {
             Destruction();
@@ -53,4 +64,5 @@ public class ActorController : MonoBehaviour
     {
         Destroy(gameObject);
     }
+    
 }
